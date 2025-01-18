@@ -1,10 +1,10 @@
 const puppeteer = require('puppeteer');
 
-const COMMUNITY_URL = 'https://x.com/i/communities/1848145497737015763';
+const COMMUNITY_URL = '';
 
 
-const USERNAME = '@CompteVps95368';
-const PASSWORD = 'Azerty123456*';
+const USERNAME = '';
+const PASSWORD = '';
 
 (async () => {
   const browser = await puppeteer.launch({ headless: false });
