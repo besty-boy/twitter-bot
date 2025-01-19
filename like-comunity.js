@@ -6,6 +6,7 @@ const COMMUNITY_URL = '';
 const USERNAME = '';
 const PASSWORD = '';
 
+
 (async () => {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
@@ -18,7 +19,10 @@ const PASSWORD = '';
     await page.type('input[name="text"]', USERNAME);
     await page.evaluate(() => {
       const buttons = Array.from(document.querySelectorAll('button[role="button"]'));
-      const nextButton = buttons.find(button => button.innerText.includes('Next'));
+      const nextButton = buttons.find(button =>
+        button.innerText.includes('Next') || button.innerText.includes('Suivant')
+      );
+      
       if (nextButton) nextButton.click();
     });
 
@@ -26,7 +30,11 @@ const PASSWORD = '';
     await page.type('input[name="password"]', PASSWORD);
     await page.evaluate(() => {
       const buttons = Array.from(document.querySelectorAll('button[role="button"]'));
-      const loginButton = buttons.find(button => button.innerText.includes('Log in'));
+      const loginButton = buttons.find(button =>
+        button.innerText.includes('Login') || button.innerText.includes('Se connecter')
+      );
+
+
       if (loginButton) loginButton.click();
     });
 
@@ -38,7 +46,7 @@ const PASSWORD = '';
     console.log('Recherche de l’onglet "Latest"...');
     await page.waitForSelector('a[role="tab"]', { visible: true });
 
-    const latestTab = await page.$('::-p-xpath(//a[@role="tab"]//span[contains(text(), "Latest")])');
+    const latestTab = await page.$('::-p-xpath(//a[@role="tab"]//span[contains(text(), "Latest") or contains(text(), "Les plus récents")])');
     if (latestTab) {
       await latestTab.click();
       console.log('Onglet "Latest" cliqué avec succès.');
